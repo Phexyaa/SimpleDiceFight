@@ -17,4 +17,20 @@ RUN dotnet publish "DiceyFighty.csproj" -c Release -o /app/publish /p:UseAppHost
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DiceyFighty.dll"]
+#ENTRYPOINT ["dotnet", "DiceyFighty.dll"]
+
+ARG admin
+ARG public_user
+ARG sshpass
+ARG gamerpass
+
+FROM ubuntu:latest
+RUN apt update && apt install  openssh-server sudo -y
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ENV admin:$admin 
+RUN  echo ENV rootpass:$rootpass | chpasswd
+RUN sudo groupadd public
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 ENV public:user$public_user 
+RUN  echo ENV gamerpass:$gamerpass | chpasswd
+RUN service ssh start
+EXPOSE 22
+CMD ["/usr/sbin/sshd","-D"]

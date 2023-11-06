@@ -30,4 +30,3 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 EXPOSE 22
 # Start SSH server
 CMD ["/usr/sbin/sshd", "-D"]
-RUN -dit -p 3000:22 --name ssh_docker ssh_on_docker:latest

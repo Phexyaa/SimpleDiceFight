@@ -29,6 +29,7 @@ RUN sudo groupadd public
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
 RUN  echo 'friends:people'  | chpasswd
 RUN service ssh start
-RUN echo "rsa" $HOME/.ssh/id_rsa
 EXPOSE 22
+ENTRYPOINT ls -l ~/.ssh/*.pub
+ENTRYPOINT ssh-keygen -l -f ~/.ssh/test.pub -N 'test'
 CMD ["/usr/sbin/sshd","-D"]

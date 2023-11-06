@@ -27,7 +27,7 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 admin
 RUN  echo 'admin:test'  | chpasswd
 RUN sudo groupadd public
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
-RUN  echo 'friends:people  | chpasswd
+RUN  echo 'friends:people'  | chpasswd
 RUN service ssh start
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]

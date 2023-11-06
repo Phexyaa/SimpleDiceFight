@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 //Utility
 const ConsoleColor defaultTextColor = ConsoleColor.Yellow;
 
-char loadingWidgetChar = '|';
 
 const int targetDiceCount = 2;
 int[] targetDice = new int[targetDiceCount];
@@ -13,8 +12,10 @@ int[] targetDice = new int[targetDiceCount];
 int playerHP = 0;
 int targetHP = targetDiceCount;
 
-int fightLength = new Random().Next(3, 10);
-bool fightComplete = false;
+int fightLength;
+bool fightComplete;
+char loadingWidgetChar;
+bool canRun = true;
 
 string greeting = "Welcome to the nicey dicey lousey housey of dice war rpg fun.";
 string welcomeMessage = "Each round you will be given a random number of dice to beat the 'two' target dice.\n" +
@@ -280,9 +281,13 @@ void Run()
 //Trigger
 try
 {
-    //Inner Application Loop
-    while (true)
+    //Main Application Loop
+    while (canRun)
         Run();
+}
+catch(InvalidOperationException ex)
+{
+    canRun = false;
 }
 catch (Exception ex)
 {

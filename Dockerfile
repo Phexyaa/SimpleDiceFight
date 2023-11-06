@@ -19,13 +19,16 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 #ENTRYPOINT ["dotnet", "DiceyFighty.dll"]
 
+
+
 FROM ubuntu:latest
+RUN --mount=type=secret,id=_env,dst=/etc/secrets/secrets.env cat /etc/secrets/secrets.env
 RUN apt update && apt install  openssh-server sudo -y
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 -secrets.env ADMIN:latest 
-RUN  echo -secrets.env ROOTPASS:latest  | chpasswd
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 "ADMIN" 
+RUN  echo "ROOTPASS"  | chpasswd
 RUN sudo groupadd public
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 -secrets.env PUBLIC_USER:latest 
-RUN  echo -secrets.env GAMERPASS:latest  | chpasswd
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 "PUBLIC_USER" 
+RUN  echo "GAMERPASS"  | chpasswd
 RUN service ssh start
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]

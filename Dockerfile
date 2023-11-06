@@ -29,7 +29,7 @@ RUN sudo groupadd public
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
 RUN  echo 'friends:people'  | chpasswd
 RUN service ssh start
+RUN mkdir ~/.ssh/
+RUN ssh-keygen -l -f ~/.ssh/ -N 'test'
 EXPOSE 22
-ENTRYPOINT mkdir ~/.ssh/
-ENTRYPOINT ssh-keygen -l -f ~/.ssh/ -N 'test'
 CMD ["/usr/sbin/sshd","-D"]

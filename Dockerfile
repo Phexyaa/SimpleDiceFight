@@ -22,7 +22,10 @@ COPY --from=publish /app/publish .
 
 
 FROM ubuntu:latest
-RUN --mount=type=secret,id=_env,dst=/etc/secrets/secrets.env cat /etc/secrets/secrets.env
+RUN --mount=type=secret,id=ADMIN,required dst=/etc/secrets/.env
+RUN --mount=type=secret,id=ROOTPASS,required dst=/etc/secrets/.env
+RUN --mount=type=secret,id=PUBLIC_USER,required dst=/etc/secrets/.env
+RUN --mount=type=secret,id=GAMERPASS,required dst=/etc/secrets/.env
 RUN apt update && apt install  openssh-server sudo -y
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 "ADMIN" 
 RUN  echo "ROOTPASS"  | chpasswd

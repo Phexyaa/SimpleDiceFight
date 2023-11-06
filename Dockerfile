@@ -30,6 +30,6 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
 RUN  echo 'friends:people'  | chpasswd
 RUN service ssh start
 RUN ls ~/.ssh/id_rsa
-RUN ssh-keygen -l -f ~/.ssh/id_rsa -N 'test'
+RUN ssh-keygen -l -v -N 'test'
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]

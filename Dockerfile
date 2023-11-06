@@ -22,16 +22,12 @@ COPY --from=publish /app/publish .
 
 
 FROM ubuntu:latest
-RUN --mount=type=secret,id=ADMIN,required dst=/etc/secrets/.env
-RUN --mount=type=secret,id=ROOTPASS,required dst=/etc/secrets/.env
-RUN --mount=type=secret,id=PUBLIC_USER,required dst=/etc/secrets/.env
-RUN --mount=type=secret,id=GAMERPASS,required dst=/etc/secrets/.env
 RUN apt update && apt install  openssh-server sudo -y
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 "ADMIN" 
-RUN  echo "ROOTPASS"  | chpasswd
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 admin 
+RUN  echo 'admin:test'  | chpasswd
 RUN sudo groupadd public
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 "PUBLIC_USER" 
-RUN  echo "GAMERPASS"  | chpasswd
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
+RUN  echo 'friends:people  | chpasswd
 RUN service ssh start
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]

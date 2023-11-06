@@ -1,9 +1,0 @@
-secrets:
-   ADMIN:
-     file: secrets.env
-   ROOTPASS:
-     file: secrets.env
-   PUBLIC_USER:
-     file: secrets.env
-   GAMERPASS:
-     file: secrets.env

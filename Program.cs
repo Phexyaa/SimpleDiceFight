@@ -1,5 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
 
 
 //Utility
@@ -15,7 +17,6 @@ int targetHP = targetDiceCount;
 int fightLength;
 bool fightComplete;
 char loadingWidgetChar;
-bool canRun = true;
 
 string greeting = "Welcome to the nicey dicey lousey housey of dice war rpg fun.";
 string welcomeMessage = "Each round you will be given a random number of dice to beat the 'two' target dice.\n" +
@@ -25,7 +26,7 @@ string welcomeMessage = "Each round you will be given a random number of dice to
                       "Controls:\n" +
                       "Press (ctrl x) to exit at any time.\n" +
                       "Press (ctrl q) to return to this screen.\n" +
-                      "Press 'Enter' or 'Spacebar' to play.\n\n" +
+                      "Press 'Enter' to play.\n\n" +
                       "Good Luck!";
 string winMessage() => ($"Congratulations you won the fight with {playerHP}HP left!");
 string loseMessage() => ($"My condolences, the target won the fight with {targetHP}HP left over.");
@@ -187,25 +188,44 @@ void DisplayMessage(string message)
 bool PromptToPlayAgian()
 {
     DisplayHorizontalLine(ConsoleColor.DarkGray, playAgainMessage.Length);
+
     Console.WriteLine(playAgainMessage);
     Console.WriteLine("Y|N");
-    ConsoleKeyInfo response = Console.ReadKey();
-    switch (response.Key)
+
+    using (var inputstream = Console.OpenStandardInput())
     {
-        case ConsoleKey.Y:
-            return true;
-        case ConsoleKey.N:
-            return false;
-        case ConsoleKey.X:
-            if (response.Modifiers == ConsoleModifiers.Control)
-                Quit();
-            return false;
-        case ConsoleKey.Q:
-            if (response.Modifiers == ConsoleModifiers.Control)
-                Run();
-            return false;
-        default:
-            return false;
+        do
+        {
+            byte[] inputBytes = new byte[16];
+            inputstream.Read(inputBytes);
+
+            char[] inputChars = Encoding.UTF8.GetChars(inputBytes);
+            if (inputChars.Length > 0)
+            {
+                switch (inputChars[0])
+                {
+                    case '\u0018':
+                        Quit();
+                        return false;
+                    case '\u0011':
+                        Run();
+                        return true;
+                    case 'y':
+                        return true;
+                    case 'Y':
+                        return true;
+                    case 'n':
+                        return false;
+                    case 'N':
+                        return false;
+                    default:
+                        return false;
+                }
+            }
+            else
+                return false;
+
+        } while (!inputstream.CanRead);
     }
 }
 void DisplayFightResults(bool success, bool isDraw)
@@ -234,12 +254,19 @@ void Quit()
 }
 void StartFight()
 {
+    Console.Clear();
     do
     {
         DisplayFightTimer();
         Fight(new int[new Random().Next(2, 8)]);
 
     } while (!fightComplete);
+
+    if (PromptToPlayAgian())
+    {
+        Reset();
+        StartFight();
+    }
 }
 void Run()
 {
@@ -255,26 +282,27 @@ void Run()
 
     DisplayWelcomeMessage();
 
-    ConsoleKeyInfo command = new ConsoleKeyInfo();
-    while (command.Key != ConsoleKey.Enter && command.Key != ConsoleKey.Spacebar)
+    using (var inputstream = Console.OpenStandardInput())
     {
-        command = Console.ReadKey();
-        if (command.Modifiers == ConsoleModifiers.Control)
-            if (command.Key == ConsoleKey.X)
-                Quit();
-            else if (command.Key == ConsoleKey.Q)
-                Run();
-    }
+        if (inputstream.CanRead)
+        {
+            byte[] inputBytes = new byte[16];
+            inputstream.Read(inputBytes);
 
-    Console.Clear();
-
-    StartFight();
-
-    //Inner Application Loop
-    while (PromptToPlayAgian())
-    {
-        Reset();
-        StartFight();
+            char[] inputChars = Encoding.UTF8.GetChars(inputBytes);
+            if (inputChars.Length > 0)
+            {
+                if (char.IsControl(inputChars[0]))
+                {
+                    if (inputChars[0] == '\u0018')
+                        Quit();
+                    else if (inputChars[0] == '\u0011')
+                        Run();
+                    else if (inputChars[0] == '\r')
+                        StartFight();
+                }
+            }
+        }
     }
 }
 
@@ -282,12 +310,8 @@ void Run()
 try
 {
     //Main Application Loop
-    while (canRun)
+    while (true)
         Run();
-}
-catch(InvalidOperationException ex)
-{
-    canRun = false;
 }
 catch (Exception ex)
 {

@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 //Utility
 const ConsoleColor defaultTextColor = ConsoleColor.Yellow;
 
-
 char loadingWidgetChar = '|';
 
 const int targetDiceCount = 2;
@@ -27,7 +26,7 @@ string welcomeMessage = "Each round you will be given a random number of dice to
                       "Press (ctrl q) to return to this screen.\n" +
                       "Press 'Enter' or 'Spacebar' to play.\n\n" +
                       "Good Luck!";
-string winMessage() => ($"Congratulations you the fight with {playerHP}HP left!");
+string winMessage() => ($"Congratulations you won the fight with {playerHP}HP left!");
 string loseMessage() => ($"My condolences, the target won the fight with {targetHP}HP left over.");
 string drawMessage = ($"Through the misty fog of war, two opponents stood alone " +
                      $"'neath an ashen sky and amongst the gorey bones");
@@ -59,13 +58,6 @@ void RollTargetDice()
 
     Console.WriteLine($"The Target rolled the following:\n{result}");
 }
-void CheckHealthPointValues()
-{
-    if (playerHP < 2)
-        throw new ArgumentOutOfRangeException(nameof(playerHP), "Player HP failed to reset correctly");
-    if (targetHP != 2)
-        throw new ArgumentOutOfRangeException(nameof(targetHP), "Player HP failed to reset correctly");
-}
 
 
 //Game Logic
@@ -73,9 +65,9 @@ void Fight(int[] playerDice)
 {
     bool success = false;
     bool isDraw = false;
-    playerHP = Convert.ToInt32(playerDice.Length * 0.8);
 
-    CheckHealthPointValues();
+    targetHP = targetDiceCount;
+    playerHP = Convert.ToInt32(playerDice.Length * 0.8);
 
     RollPlayerDice(playerDice);
     RollTargetDice();
@@ -231,7 +223,6 @@ void DisplayFightResults(bool success, bool isDraw)
 //Application Logic
 void Reset()
 {
-    targetHP = targetDiceCount;
     fightLength = new Random().Next(3, 10);
     fightComplete = false;
     loadingWidgetChar = '|';
@@ -251,6 +242,8 @@ void StartFight()
 }
 void Run()
 {
+    Reset();
+
     Console.BackgroundColor = ConsoleColor.Black;
     Console.ForegroundColor = defaultTextColor;
 
@@ -269,17 +262,14 @@ void Run()
             if (command.Key == ConsoleKey.X)
                 Quit();
             else if (command.Key == ConsoleKey.Q)
-            {
-                Reset();
                 Run();
-            }
     }
 
     Console.Clear();
 
     StartFight();
 
-    //Main Application Loop
+    //Inner Application Loop
     while (PromptToPlayAgian())
     {
         Reset();
@@ -290,7 +280,9 @@ void Run()
 //Trigger
 try
 {
-    Run();
+    //Inner Application Loop
+    while (true)
+        Run();
 }
 catch (Exception ex)
 {

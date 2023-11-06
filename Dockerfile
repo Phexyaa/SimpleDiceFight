@@ -30,6 +30,6 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g public -u 1001 friends
 RUN  echo 'friends:people'  | chpasswd
 RUN service ssh start
 EXPOSE 22
-ENTRYPOINT ls -l ~/.ssh/*.pub
+ENTRYPOINT mkdir ~/.ssh/
 ENTRYPOINT ssh-keygen -l -f ~/.ssh/ -N 'test'
 CMD ["/usr/sbin/sshd","-D"]

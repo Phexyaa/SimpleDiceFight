@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "yFv7CYITKyedKZmScfLMRHbZBfTPhc9olS3ciJF2hfFysS8HpAV+YusZmRef5LN0Su4ffX/kSHeqnBEg9zY5WQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\phexyaa\\source\\repos\\DiceyFighty\\DiceyFighty.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\phexyaa\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512"
+  ],
+  "logs": []
+}

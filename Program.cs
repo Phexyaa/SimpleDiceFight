@@ -18,14 +18,14 @@ int fightLength;
 bool fightComplete;
 char loadingWidgetChar;
 
-string greeting = "Welcome to the nicey dicey lousey housey of dice war rpg fun.";
+string greeting = "Welcome to the nice dice house of fight.";
 string welcomeMessage = "Each round you will be given a random number of dice to beat the 'two' target dice.\n" +
                       "You win if any two or more of your dice are higher than both of the target dice.\n" +
                       "You lose if the target dice are higher than 80% of your dice (rounded up).\n" +
                       "You draw on any other condition and get to re-roll.\n\n" +
                       "Controls:\n" +
-                      "Press (ctrl x) to exit at any time.\n" +
-                      "Press (ctrl q) to return to this screen.\n" +
+                      "Press (ctrl x + Enter) to exit at any time.\n" +
+                      "Press (ctrl q + Enter) to return to this screen.\n" +
                       "Press 'Enter' to play.\n\n" +
                       "Good Luck!";
 string winMessage() => ($"Congratulations you won the fight with {playerHP}HP left!");

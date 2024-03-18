@@ -1,0 +1,15 @@
+C:\Users\phexyaa\source\repos\DiceyFighty\bin\Debug\net7.0\DiceyFighty.exe
+C:\Users\phexyaa\source\repos\DiceyFighty\bin\Debug\net7.0\DiceyFighty.deps.json
+C:\Users\phexyaa\source\repos\DiceyFighty\bin\Debug\net7.0\DiceyFighty.runtimeconfig.json
+C:\Users\phexyaa\source\repos\DiceyFighty\bin\Debug\net7.0\DiceyFighty.dll
+C:\Users\phexyaa\source\repos\DiceyFighty\bin\Debug\net7.0\DiceyFighty.pdb
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.AssemblyInfoInputs.cache
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.AssemblyInfo.cs
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.csproj.CoreCompileInputs.cache
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.sourcelink.json
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.dll
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\refint\DiceyFighty.dll
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.pdb
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\DiceyFighty.genruntimeconfig.cache
+C:\Users\phexyaa\source\repos\DiceyFighty\obj\Debug\net7.0\ref\DiceyFighty.dll
